@@ -10,11 +10,10 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.example.databasesample.R;
-
 public class NodeDataBaseActivity extends Activity {
 
 	private TextView text;
+	private FileManager fileManager = new FileManager();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +42,10 @@ public class NodeDataBaseActivity extends Activity {
 			NodeDao dao = new NodeDao(db);
 
 			Node node = new Node(0, event.getX(), event.getY());
-			dao.insert(node);
-			db.close();
+
+			byte[] byteNode = fileManager.Save(this, node);
+			
+			dao.insert(byteNode);
 			displayDatabase();
 
 		}

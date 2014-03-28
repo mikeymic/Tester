@@ -12,15 +12,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	//コンテントプロバイダ　には　_idが必要
 	public static final String CLM_ID = "_id";
-	public static final String  CLM_X = "x";
-	public static final String  CLM_Y = "y";
+//	public static final String  CLM_X = "x";
+//	public static final String  CLM_Y = "y";
+	public static final String  CLM_NODE = "node";
 
 //	空白を忘れないこと
 	private static final String CREATE_DATABASE_TABLE =
 			"CREATE TABLE " + TABLE_NAME +" ("
 	+ CLM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-	+ CLM_X + " REAL NOT NULL, "
-	+ CLM_Y + " REAL NOT NULL"
+//	+ CLM_X + " REAL NOT NULL, "
+//	+ CLM_Y + " REAL NOT NULL"
+	+ CLM_NODE + " BLOB NOT NULL"
 	+	");";
 
 	private static final String DROP_TABLE =

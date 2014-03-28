@@ -1,37 +1,36 @@
 package com.example.serializedatasample;
 
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 
 public class FileManager {
 
-	public static final String FILE_NAME = "object.file";
 
 	/**
 	 * シリアライズ
 	 * オブジェクト（文字列リスト）をファイルに保存
 	 * @param context
-	 * @param list
+	 * @param node
 	 * @return
 	 */
-	public static int Save(Context context, List<Node> list) {
+	public byte[] Save(Context context, Node node) {
 
-		FileOutputStream outFile;
+		ByteArrayOutputStream outFile;
 		ObjectOutputStream outObject;
+		byte[] byteNode = null;
 		try {
-			outFile = context.openFileOutput(FILE_NAME, 0);
+			outFile = new ByteArrayOutputStream();
 			outObject = new ObjectOutputStream(outFile);
-			outObject.writeObject(list);
+			outObject.writeObject(node);
+			byteNode = outFile.toByteArray();
 			outObject.close();
 			outFile.close();
 		} catch (FileNotFoundException e) {
@@ -39,7 +38,7 @@ public class FileManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return byteNode;
 		}
 
 	/**
@@ -48,13 +47,13 @@ public class FileManager {
 	 * @param context
 	 * @return
 	 */
-	public static List<Node> loadNode(Context context) {
-		List<Node> list = new ArrayList<Node>();
+	public Node loadNode(byte[] stream) {
+		Node node = new Node();
 
 		try {
-			FileInputStream inFile = context.openFileInput(FILE_NAME);
+			ByteArrayInputStream inFile = new ByteArrayInputStream(stream);
 			ObjectInputStream inObject = new ObjectInputStream(inFile);
-			list = (List<Node>) inObject.readObject();
+			node = (Node) inObject.readObject();
 			inObject.close();
 			inFile.close();
 		} catch (StreamCorruptedException e) {
@@ -68,7 +67,7 @@ public class FileManager {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return list;
+		return node;
 	}
 
 
