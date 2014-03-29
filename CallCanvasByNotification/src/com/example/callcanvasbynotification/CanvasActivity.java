@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,36 +16,40 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class CanvasActivity extends Activity {
-    
+
     public static final int LINE_THICK = 10;
     public static final int LINE_MIDDLE = 6;
     public static final int LINE_SHIN = 2;
     private CanvasView canvasView;
-    
+
     public class Line {
 	private int color;
 	private int width;
 	private ArrayList<Point> points;
-	
+
 	public Line(int color, int width) {
 		points = new ArrayList<Point>();
 		this.color = color;
 		this.width = width;
 	}
-	
+
 	public int getColor() {
 		return color;
 	}
-	
+
 	public int getWidth() {
 		return width;
 	}
@@ -52,12 +57,12 @@ public class CanvasActivity extends Activity {
 	public void addPoint(Point p) {
 		points.add(p);
 	}
-	
+
 	public ArrayList<Point> getPoints() {
 		return points;
 	}
 }
-    
+
     public class CanvasView extends View {
 	// 	全ての線を管理するリスト
 	private ArrayList<Line> lines = new ArrayList<Line>();
@@ -70,7 +75,7 @@ public class CanvasActivity extends Activity {
 	// 線の太さ
 	//private int lineWidth = 6;
 	private int currentWidth = CanvasActivity.LINE_MIDDLE;
-	
+
 	public CanvasView(Context context) {
 		super(context);
 		this.context = context;
@@ -80,7 +85,7 @@ public class CanvasActivity extends Activity {
 		super(context, attrs);
 		this.context = context;
 	}
-	
+
 	public CanvasView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		this.context = context;
@@ -103,16 +108,16 @@ public class CanvasActivity extends Activity {
 		super.onDraw(canvas);
 		drawAll(canvas);
 	}
-	
+
 	public void drawAll(Canvas canvas) {
-//		canvas.drawColor(Color.argb(30, 255, 255, 255));
-		canvas.drawColor(Color.argb(255, 255, 255, 255));
+		canvas.drawColor(Color.argb(30, 255, 255, 255));
+//		canvas.drawColor(Color.argb(255, 255, 255, 255));
 		Paint paint = new Paint();
 		paint.setAntiAlias(true);
 		for(Line line: lines) {
 			paint.setColor(line.getColor());
 			paint.setStrokeWidth(line.getWidth());
-			for(int i = 0; i < (line.getPoints().size() - 1); i++) { 
+			for(int i = 0; i < (line.getPoints().size() - 1); i++) {
 				Point s = line.getPoints().get(i);
 				Point e = line.getPoints().get(i + 1);
 				canvas.drawLine(s.x, s.y, e.x, e.y, paint);
@@ -144,7 +149,7 @@ public class CanvasActivity extends Activity {
 	public void setColor(int c) {
 		currentColor = c;
 	}
-	
+
 	public void setLineWidth(int width) {
 		currentWidth = width;
 	}
@@ -156,9 +161,32 @@ public class CanvasActivity extends Activity {
 
 	canvasView = new CanvasView(this);
 	setContentView(canvasView);
+
+	Button button = new Button(this);
+	addContentView(button, new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+	button.setOnClickListener(new View.OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			Drawable drawable = new BitmapDrawable(getResources(), getViewBitmap(canvasView));
+			canvasView.setBackground(drawable);
+		}
+	});
     }
-	
-   
+
+	public Bitmap getViewBitmap(View view) {
+		view.setDrawingCacheEnabled(true);
+		Bitmap cache = view.getDrawingCache();
+		if (cache == null) {
+			return null;
+		}
+		Bitmap bitmap = Bitmap.createBitmap(cache);
+		view.setDrawingCacheEnabled(false);
+		return bitmap;
+	}
+
+
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -173,44 +201,44 @@ public class CanvasActivity extends Activity {
 			AlertDialog.Builder adialog =new AlertDialog.Builder(this);
 			adialog.setTitle("アラートダイアログ");
 			adialog.setMessage("OK:ボタン押下");
-			
+
 			adialog.setPositiveButton("OK", new OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-				    
-				    
-				    
-				    
-				    
-				    
+
+
+
+
+
+
 					Toast.makeText(CanvasActivity.this, "OKボタンが押されました", Toast.LENGTH_SHORT).show();
 				}
 			});
-			
+
 			adialog.setNegativeButton("NO", new OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					Toast.makeText(CanvasActivity.this, "キャンセルされました", Toast.LENGTH_SHORT).show();					
+					Toast.makeText(CanvasActivity.this, "キャンセルされました", Toast.LENGTH_SHORT).show();
 				}
 			});
 //			adialog.setNeutralButton("XXX", new OnClickListener() {
-//				
+//
 //				@Override
 //				public void onClick(DialogInterface dialog, int which) {
-//					Toast.makeText(CanvasActivity.this, "XXXボタンが押されました", Toast.LENGTH_SHORT).show();					
+//					Toast.makeText(CanvasActivity.this, "XXXボタンが押されました", Toast.LENGTH_SHORT).show();
 //				}
 //			});
 			adialog.show();
-			
-			
+
+
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
 
-    
+
 	    private void saveToFile(String filename) {
 	        try {
 	            FileOutputStream out = openFileOutput(filename, MODE_PRIVATE);
@@ -227,19 +255,19 @@ public class CanvasActivity extends Activity {
 	        } catch (IOException e) {
 	        }
 	    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
