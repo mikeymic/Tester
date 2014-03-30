@@ -1,12 +1,10 @@
-package com.example.memoinanywhere.data;
+package com.example.memoinanywhere.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import com.example.memoinanywhere.CustomEditText;
 
 public class MemoView extends FrameLayout {
 

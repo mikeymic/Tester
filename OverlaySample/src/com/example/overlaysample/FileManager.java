@@ -1,4 +1,4 @@
-package com.example.memoinanywhere.filemanager;
+package com.example.overlaysample;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,8 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
 
-import com.example.memoinanywhere.data.Bitmap;
-import com.example.memoinanywhere.data.Texts;
+import android.graphics.Bitmap;
 
 public class FileManager {
 
@@ -19,7 +18,7 @@ public class FileManager {
 	 * シリアライズ
 	 * オブジェクト（文字列リスト）をファイルに保存
 	 */
-	public byte[] SerializeObject(Object saveObject) {
+	public byte[] SerializeObject(Bitmap saveObject) {
 
 		ByteArrayOutputStream outFile;
 		ObjectOutputStream outObject;
@@ -40,33 +39,8 @@ public class FileManager {
 		}
 
 
-
-// デシリアライズ
-	public Texts DeSerializeTexts(byte[] stream) {
-		Texts texts = new Texts();
-
-		try {
-			ByteArrayInputStream inFile = new ByteArrayInputStream(stream);
-			ObjectInputStream inObject = new ObjectInputStream(inFile);
-			texts = (Texts) inObject.readObject();
-			inObject.close();
-			inFile.close();
-		} catch (StreamCorruptedException e) {
-			e.printStackTrace();
-		} catch (OptionalDataException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return texts;
-	}
-
 	public Bitmap DeSerializeImages(byte[] stream) {
-		Bitmap images = new Bitmap();
+		Bitmap images = null;
 		try {
 			ByteArrayInputStream inFile = new ByteArrayInputStream(stream);
 			ObjectInputStream inObject = new ObjectInputStream(inFile);

@@ -5,7 +5,7 @@ public class MemoPage {
 
 	private String name;
 	private Texts texts;
-	private Images images;
+	private Bitmap images;
 	/**
 	 * @return name
 	 */
@@ -33,13 +33,13 @@ public class MemoPage {
 	/**
 	 * @return images
 	 */
-	public Images getImages() {
+	public Bitmap getImages() {
 		return images;
 	}
 	/**
 	 * @param images セットする images
 	 */
-	public void setImages(Images images) {
+	public void setImages(Bitmap images) {
 		this.images = images;
 	}
 

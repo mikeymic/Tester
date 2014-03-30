@@ -1,4 +1,4 @@
-package com.example.memoinanywhere;
+package com.example.memoinanywhere.view;
 
 import android.content.Context;
 import android.graphics.Color;

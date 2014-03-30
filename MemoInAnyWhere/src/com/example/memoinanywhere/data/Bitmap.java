@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import android.widget.ImageView;
 
-public class Images extends ArrayList<ImageView>{
+public class Bitmap extends ArrayList<ImageView>{
 
 	private int id;
 	private int x;

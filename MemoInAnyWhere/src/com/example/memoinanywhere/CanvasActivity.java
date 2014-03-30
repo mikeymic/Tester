@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.memoinanywhere.data.MemoView;
+import com.example.memoinanywhere.view.MemoView;
 
 public class CanvasActivity extends Activity {
 
