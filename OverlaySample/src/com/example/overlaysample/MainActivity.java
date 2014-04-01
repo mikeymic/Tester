@@ -1,5 +1,7 @@
 package com.example.overlaysample;
 
+import java.io.ByteArrayOutputStream;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -46,14 +48,17 @@ public class MainActivity extends Activity {
 			Bitmap bitmap = Bitmap.createBitmap(cache);
 			view.setDrawingCacheEnabled(false);
 
-			intent.putExtra("OverlayView",new FileManager().SerializeObject(bitmap));
+		     ByteArrayOutputStream bout = new ByteArrayOutputStream();
+		     bitmap.compress(Bitmap.CompressFormat.PNG, 90, bout);
+		     byte[] mBitmapArray = bout.toByteArray();
+
+			intent.putExtra("OverlayView",mBitmapArray);
 			startService(intent);
 
 			break;
 		case R.id.action_end_overlay:
 			// Viewを画面上に重ね合わせする
 
-			LayerService.view = view;
 			stopService(new Intent(MainActivity.this, LayerService.class));
 			break;
 		}

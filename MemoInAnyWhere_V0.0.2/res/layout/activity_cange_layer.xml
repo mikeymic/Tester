@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" >
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/linear_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            style="@android:attr/buttonBarButtonStyle"
+            android:id="@+id/button_del_view"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Delete View"
+            android:textSize="18sp"/>
+        <Button
+            style="@android:attr/buttonBarButtonStyle"
+            android:id="@+id/button_layer_change"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Layer Change"
+            android:textSize="18sp"/>
+        <Button
+            style="@android:attr/buttonBarButtonStyle"
+            android:id="@+id/button_event_change"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Event Change"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -3,7 +3,10 @@ package com.example.overlaysample;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.IBinder;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -38,7 +41,10 @@ public class LayerService extends Service {
 
 		// レイアウトファイルから重ね合わせするViewを作成する
 //		view = layoutInflater.inflate(R.layout.overlay, null);
-
+		byte[] data = intent.getByteArrayExtra("OverlayView");
+		Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+		view = new MyView(this);
+		view.setBackground(new BitmapDrawable(getResources(), bmp));
 		// Viewを画面上に重ね合わせする
 		wm.addView(view, params);
 
