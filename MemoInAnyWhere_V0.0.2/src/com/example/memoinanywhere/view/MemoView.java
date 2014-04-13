@@ -119,7 +119,6 @@ public class MemoView extends FrameLayout {
 		}
 
 		CustomEditText edit = new CustomEditText(getContext());
-		edit.setEms(10);
 		touchX = (int) event.getX();
 		touchY = (int) event.getY();
 		switch (event.getAction()) {
