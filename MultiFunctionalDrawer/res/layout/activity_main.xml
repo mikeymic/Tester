@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/LinearLayout1"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".MainActivity" >
+
+	<com.example.multifunctionaldrawer.CanvasView
+		android:id="@+id/canvas"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="10" />
+
+	<LinearLayout
+		android:id="@+id/LinearLayout2"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" >
+
+		<Button
+			android:id="@+id/button_undo"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:text="Undo" />
+
+		<Button
+			android:id="@+id/button_redo"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:text="Redo" />
+
+		<Button
+			android:id="@+id/button_clear"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:text="Clear" />
+
+		<Button
+			android:id="@+id/button_draw"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:text="Draw" />
+	</LinearLayout>
+
+</LinearLayout>
