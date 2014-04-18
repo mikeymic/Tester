@@ -1,4 +1,7 @@
 package com.example.multifunctionaldrawer.undomanager;
+
+import android.util.Log;
+
 public class AddLineCommand extends DataModelCommand {
 
     Line line;
@@ -20,9 +23,11 @@ public class AddLineCommand extends DataModelCommand {
         mDataModel.lines.remove(line);
     }
 
-	@Override
-	public void clear() {
 
+	public void clear() {
+		mDataModel.lines.clear();
+		mDataModel.lines.add(line);
+		Log.d("TEST", "through Command CLEAR");
 	}
 
 }

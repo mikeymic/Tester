@@ -14,6 +14,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -93,7 +94,11 @@ public class CanvasView extends View {
 		this.drawMode = drawMode;
 		switch (drawMode) {
 		case MODE_CLEAR:
-			invoker.clear();
+			Log.d("TEST", "through MODE_CLEAR");
+			ICommand command = 
+					new AddLineCommand(dataModel, 
+							new Line(new Path(), paint, 0, 0));
+			invoker.clear(command);
 			break;
 		case MODE_UNDO:
 			invoker.undo();
@@ -109,12 +114,11 @@ public class CanvasView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-
 		switch (drawMode) {
 		case MODE_CLEAR:
+			Log.d("TEST", "through MODE_CLEAR2");
 			bmpCanvas.drawColor(Color.BLUE);
-			canvas.drawBitmap(bitmap, 0, 0, null);
-			return;
+			break;
 		case MODE_DRAW:
 				line.drawLine(bmpCanvas);
 			break;
