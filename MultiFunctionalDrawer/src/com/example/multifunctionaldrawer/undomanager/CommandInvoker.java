@@ -1,45 +1,54 @@
 package com.example.multifunctionaldrawer.undomanager;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class CommandInvoker {
-    private Stack<ICommand> mUndoBuffer;
-    private Stack<ICommand> mRedoBuffer;
+	private Deque<ICommand> undoBuffer;
+	private Deque<ICommand> redoBuffer;
 
-    public CommandInvoker() {
-         mUndoBuffer = new Stack<ICommand>();
-         mRedoBuffer = new Stack<ICommand>();
-    }
-
-    public void invoke(ICommand command) {
-        command.invoke();
-        mRedoBuffer.clear();
-        mUndoBuffer.push(command);
-    }
-
-    public void undo() {
-        if (mUndoBuffer.isEmpty()) {
-             return;
-        }
-        ICommand command = mUndoBuffer.pop();
-	command.undo();
-	mRedoBuffer.push(command);
-    }
-
-    public void redo() {
-        if (mRedoBuffer.isEmpty()) {
-	    return;
+	public CommandInvoker() {
+		undoBuffer = new ArrayDeque<ICommand>();
+		redoBuffer = new ArrayDeque<ICommand>();
 	}
-        ICommand command = mRedoBuffer.pop();
-	command.redo();
-	mUndoBuffer.push(command);
-    }
-    public void clear() {
-        if (mRedoBuffer.isEmpty()) {
-	    return;
+
+	public void invoke(ICommand command) {
+		command.invoke();
+		redoBuffer.clear();
+		undoBuffer.addFirst(command);
 	}
-        ICommand command = mRedoBuffer.pop();
-	command.clear();
-	mUndoBuffer.push(command);
-    }
+
+	public void undo() {
+		if (undoBuffer.isEmpty()) {
+			return;
+		}
+		ICommand command = undoBuffer.removeFirst();
+		command.undo();
+		redoBuffer.addFirst(command);
+	}
+
+	public void redo() {
+		if (redoBuffer.isEmpty()) {
+			return;
+		}
+
+		ICommand command = redoBuffer.removeFirst();
+		command.redo();
+		undoBuffer.addFirst(command);
+	}
+
+	public void clear(ICommand command) {
+
+		if (redoBuffer.isEmpty()) {
+			return;
+		} else {
+			for (int i = 0; i <= redoBuffer.size(); i++) {
+				ICommand ic = redoBuffer.removeFirst();
+				undoBuffer.addLast(ic);//後ろに追加
+			}
+			redoBuffer.clear();
+		}
+		command.clear();
+		redoBuffer.addFirst(command);
+	}
 }
