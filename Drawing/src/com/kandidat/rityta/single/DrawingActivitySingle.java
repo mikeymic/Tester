@@ -36,7 +36,7 @@ public class DrawingActivitySingle extends DrawingActivity {
 	private void createBackground() {
 		Display display = getWindowManager().getDefaultDisplay();
 		Bitmap tmp = Bitmap.createBitmap(display.getWidth(), (int) (display.getHeight() * 0.85), Bitmap.Config.ARGB_8888);
-		tmp.eraseColor(Color.WHITE);
+		tmp.eraseColor(Color.BLUE);
 		view.setBitmap(tmp);
 	}
 	
