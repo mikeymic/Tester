@@ -1,12 +1,12 @@
 package com.example.linetest;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
 	CanvasView view;
 	

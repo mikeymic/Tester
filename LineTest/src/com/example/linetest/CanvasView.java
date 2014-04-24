@@ -13,6 +13,7 @@ import android.graphics.Paint.Cap;
 import android.graphics.Paint.Join;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -91,8 +92,6 @@ public class CanvasView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		bitmap = Bitmap.createBitmap(width, height, Config.ARGB_8888);
-		bc = new Canvas(bitmap);
 		bc.drawColor(Color.WHITE);
 		switch (mode) {
 		case MODE_ADD:
@@ -107,29 +106,51 @@ public class CanvasView extends View {
 		case MODE_CROP:
 			break;
 		case MODE_ZOOM:
-			bitmap = Bitmap.createBitmap(width*2, height*2, Config.ARGB_8888);
-			bc = new Canvas(bitmap);
 			bc.drawColor(Color.WHITE);
 			for (int i = zoomLines.size(); i < lines.size(); i++) {
 				zoomLine = new Path();
+				zoomLine = lines.get(i);
 				lines.get(i).transform(matrix , zoomLine);
 				zoomLines.add(zoomLine);
 			}
 			Paint p = new Paint(paint);
 			p.setStrokeWidth(paint.getStrokeWidth()*2);
+			
 			for (int i = 0; i < zoomLines.size(); i++) {
 			bc.drawPath(zoomLines.get(i), p);
 			int w = width/4;
 			int h = height/4;
-			dst.set(0, 0, width*2, height*2);
-			src.set(w, h, w*3, h*3);
+			dst.set(0, 0, width, height);
+			src.set( w, h, w*3, h*3);
 			}
 			break;
 		}
 
-		canvas.drawBitmap(bitmap, src, dst, null);
+		canvas.drawBitmap(bitmap, src, dst, paint);
 		
 	}
+	
+	/*Pathの保持と座標変換
+	 * 
+	 * ArrayList<path> drawLines 
+	 * ArrayList<path> zoomLines 
+	 * 
+	 * zoom時には、作成したPathZoomのlineに挿入
+	 * その際、タッチした座標を座標変換してPathを作り直す（拡大画面用）
+	 * （PathのTransrateでは大きさがあってても位置がずれる）
+	 * 座標が変わる度に、変換し続ける
+	 * （そのためには全XとYの値が必要）どうにかしてTranslateで実現できないか？
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * */
+	
+	
+	
+	
+	
 	Path path = null;
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -137,6 +158,7 @@ public class CanvasView extends View {
 		float x = event.getX();
 		float y = event.getY();
 		Matrix m = new Matrix();
+		PointF p = new PointF();
 		
 		
 		switch (event.getAction()) {
@@ -145,27 +167,39 @@ public class CanvasView extends View {
 			line.moveTo(x, y);
 			if (mode == MODE_ZOOM) {
 				path = new Path();
-				path.moveTo(x, y);
+				p = scaleCoordinates(x, y);
+				path.moveTo(p.x, p.y);
 				zoomLines.add(path);
 			}
 			break;
 		case MotionEvent.ACTION_MOVE:
 			line.lineTo(x, y);
 			if (mode == MODE_ZOOM) {
-				path.lineTo(x, y);
+				p = scaleCoordinates(x, y);
+				path.lineTo(p.x, p.y);
 			}
 			break;
 		case MotionEvent.ACTION_UP:
 			line.setLastPoint(x, y);
 			if (mode == MODE_ZOOM) {
-				path.setLastPoint(x, y);
+				p = scaleCoordinates(x, y);
+				path.setLastPoint(p.x, p.y);
+				
 				m.postScale(1.0f/zoomState, 1.0f/zoomState);
 				line.transform(m);
 			}
 			break;
 		}
+		
 		invalidate();
 		return true;
 	}
 
+	//Pathの座標変換 !拡大縮小するたびに呼ぶ必要あり？
+	public PointF scaleCoordinates(float x, float y) {
+		return new PointF(
+				(x - dst.left) / (dst.right - dst.left) * (src.right - src.left) + src.left,
+				(y - dst.top) / (dst.bottom - dst.top) * (src.bottom - src.top) + src.top);
+	}
+	
 }
