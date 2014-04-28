@@ -79,9 +79,9 @@ public class DynamicZoomControl implements Observer {
 		final float newZoomY = mState.getZoomY(aspectQuotient);
 
 		// Pan to keep x and y coordinate invariant
-		mState.setPanX(mState.getPanX() + (x - .5f)
+		mState.setPanX(mState.getPanX() + (x - 0.5f)
 				* (1f / prevZoomX - 1f / newZoomX));
-		mState.setPanY(mState.getPanY() + (y - .5f)
+		mState.setPanY(mState.getPanY() + (y - 0.5f)
 				* (1f / prevZoomY - 1f / newZoomY));
 
 		updatePanLimits();

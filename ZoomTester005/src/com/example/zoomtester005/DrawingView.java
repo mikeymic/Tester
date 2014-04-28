@@ -71,13 +71,13 @@ public class DrawingView extends View implements Observer {
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas) {
+	protected void onDraw(Canvas c) {
 		if (bitmap != null) {
-			canvas.drawColor(0x000000FF);
+			c.drawColor(0x000000FF);
 			if (zoomEnabled) {
 				calculateZoomRectangles();
 
-				canvas.drawBitmap(bitmap, src, dst, bitPaint);
+				c.drawBitmap(bitmap, src, dst, bitPaint);
 
 				// Calculate scaling of width on shown brush to match that of
 				// drawn paths size
@@ -85,13 +85,13 @@ public class DrawingView extends View implements Observer {
 				p.setStrokeWidth(p.getStrokeWidth() * scaledBrushRatio);
 
 				// Draw the current path if user is drawing
-				canvas.drawPath(currPath.getPath(), p);
+				c.drawPath(currPath.getPath(), p);
 			} else {
 				// Draw previous paths already saved to the bitmap
-				canvas.drawBitmap(bitmap, 0, 0, bitPaint);
+				c.drawBitmap(bitmap, 0, 0, bitPaint);
 
 				// Draw the current path if user is drawing
-				canvas.drawPath(currPath.getPath(), currPath.getBrush()
+				c.drawPath(currPath.getPath(), currPath.getBrush()
 						.getPaint());
 			}
 		}
@@ -163,7 +163,7 @@ public class DrawingView extends View implements Observer {
 
 				saveCoordinates(p.x, p.y);
 			} else {
-				saveCoordinates(x, y);
+				saveCoordinates(x, y);//おそらく無意味
 			}
 
 			return true;
