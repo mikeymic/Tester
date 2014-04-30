@@ -104,9 +104,6 @@ public class DrawingView extends View {
 
 		scaleDetector.onTouchEvent(event);
 		scaleFactor = zoomListener.scaleFactor;
-//		matrix.setScale(2, 2);
-//		matrix.setScale(scaleFactor, scaleFactor);
-//		matrix.postTranslate(getWidth() / 2, getHeight() / 2);
 		matrix.setScale(scaleFactor, scaleFactor);
 		matrix.postTranslate(zoomListener.span / 2, zoomListener.span / 2);
 
