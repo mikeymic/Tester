@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/LinearLayout1"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context="${packageName}.${activityClass}" >
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_margin="5dp"
+		android:background="#FF000000" />
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Note Info" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+
+		<EditText
+			android:id="@+id/text_note_id"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:ems="10" >
+		</EditText>
+
+		<EditText
+			android:id="@+id/text_note_name"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:ems="10" >
+		</EditText>
+
+		<EditText
+			android:id="@+id/text_note_create_date"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:ems="10" />
+
+		<EditText
+			android:id="@+id/text_note_update_date"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:ems="10" />
+
+		<Button
+			android:id="@+id/button_note_enter"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:text="note"
+			android:textSize="16sp" />
+	</LinearLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_margin="5dp"
+		android:background="#FF000000" />
+
+	<ListView
+		android:id="@+id/note_list_view"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1" />
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_margin="5dp"
+		android:background="#FF000000" />
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Page Info" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+
+		<EditText
+			android:id="@+id/text_page_id"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:ems="10" />
+
+		<EditText
+			android:id="@+id/text_page_name"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:ems="10" />
+
+		<EditText
+			android:id="@+id/text_page_create_date"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:ems="10" />
+
+		<EditText
+			android:id="@+id/text_page_update_date"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:ems="10" />
+
+		<Button
+			android:id="@+id/button_page_enter"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:text="page"
+			android:textSize="16sp" />
+	</LinearLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_margin="5dp"
+		android:background="#FF000000" />
+
+	<ListView
+		android:id="@+id/page_list_view"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1" />
+
+</LinearLayout>
