@@ -181,7 +181,7 @@ public class DrawingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 	super.onDraw(canvas);
-	
+
 	Log.d("TEST", "[Canvas Width]" + Float.toString(canvas.getWidth()));
 	Log.d("TEST", "[Canvas Height]" + Float.toString(canvas.getHeight()));
 	Log.d("TEST", "[Bitmap Width]" + Float.toString(bitmap.getWidth()));
@@ -249,8 +249,8 @@ public class DrawingView extends View {
 		/** ---------- zoom中 ---------- **/
 		PointF pp = scaleCoordinates(newP.x, newP.y);
 		scaledLine.setStartLinePoint(pp);
-	    } 
-	    
+	    }
+
 	    /** ---------- 通常描画 ---------- **/
 	    drawLine = new DrawLine();
 	    drawLine.setStartLinePoint(newP);
@@ -263,21 +263,21 @@ public class DrawingView extends View {
 	    // 移動していない時
 	    distP.set(Math.abs(newP.x - oldP.x), Math.abs(newP.y - oldP.y));
 	    if (distP.x < TOUCH_TOLERANCE && distP.y < TOUCH_TOLERANCE) {
-		break; 
+		break;
 	    }
 
 	    // 移動している時
-	    
+
 	    if (isZoom) {
 		/** ---------- zoom中 ---------- **/
 		PointF pp = scaleCoordinates(newP.x, newP.y);
 		scaledLine.addLinePoint(pp);
-	    } 
-	    
+	    }
+
 	    /** ---------- 通常描画 ---------- **/
 	    drawLine.addLinePoint(newP);
 	    oldP.set(newP);
-	    
+
 	    break;
 	case MotionEvent.ACTION_UP://最後だけ処理を分ける
 	    if (isZoom) {
@@ -292,7 +292,7 @@ public class DrawingView extends View {
 		bmpCanvas.drawPath(drawLine.getLine(), drawLine.getPaint());
 		drawLines.add(drawLine);//おそらくアンドゥ/リドゥ用？あとは再描画
 	    }
-	    
+
 
 	    break;
 	}
